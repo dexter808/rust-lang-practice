@@ -1,5 +1,9 @@
+use std::collections::HashMap;
+use std::fmt::Display;
+use std::hash::Hash;
 use std::thread;
 use std::time::Duration;
+use std::collections::hash_map::Entry;
 
 fn simulated_calculation(intensity: u32) -> u32 {
     println!("Simulating slow calculation..");
@@ -7,28 +11,28 @@ fn simulated_calculation(intensity: u32) -> u32 {
     intensity + 1
 }
 
-struct Cacher<T>
-where T: Fn(u32) -> u32,
+struct Cacher<T, U: Copy+Display+Eq+Hash>
+where T: Fn(U) -> U,
 {
     calculation: T,
-    value: Option<u32>,
+    value: HashMap<U,U>,
 }
 
-impl<T> Cacher<T>
+impl<T, U: Copy+Display+Eq+Hash> Cacher<T, U>
 where
-    T: Fn(u32) -> u32,
+    T: Fn(U) -> U,
 {
-    fn new(calculation: T) -> Cacher<T> {
-        Cacher { calculation: calculation, value: None }
+    fn new(calculation: T) -> Cacher<T, U> {
+        Cacher { calculation: calculation, value: HashMap::new() }
     }
 
-    fn value(&mut self, arg: u32) -> u32 {
-        match self.value {
-            Some(v) => v,
-            None => {
-                let v = (self.calculation)(arg);
-                self.value = Some(v);
-                v
+    fn value(&mut self, arg: U) -> U {
+        match self.value.entry(arg) {
+            Entry::Occupied(v) => *v.get(),
+            Entry::Vacant(vac_e) => {
+                let cv = (self.calculation)(arg);
+                vac_e.insert(cv);
+                cv
             }
         }
     }
@@ -64,6 +68,10 @@ fn generated_workoout(inte: u32, r_n: u32) {
     }
 }
 
-fn sample_ff(cache: &mut Cacher<impl Fn(u32) -> u32>, intensity: u32) {
-    print!("Sample FF -> {}", cache.value(intensity));
+fn sample_ff(cache: &mut Cacher<impl Fn(u32) -> u32, u32>, intensity: u32) {
+    println!("Sample FF -> {}", cache.value(intensity));
+    println!("Sample FF -> {}", cache.value(9));
+    println!("Sample FF -> {}", cache.value(8));
+    println!("Sample FF -> {}", cache.value(9));
+    println!("Sample FF -> {}", cache.value(intensity));
 }

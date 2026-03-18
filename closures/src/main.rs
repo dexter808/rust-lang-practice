@@ -42,7 +42,16 @@ fn main() {
 }
 
 fn generated_workoout(inte: u32, r_n: u32) {
-    let mut x_cl = Cacher::new(simulated_calculation);
+    let sv = vec![1,2];
+    let mut x_cl = Cacher::new(move |arg| {
+        println!("Access to value outside of current scope = {:?}",sv);
+        simulated_calculation(arg)
+    });
+
+    // println!(" Value of sv {:?}", sv);
+
+    sample_ff(&mut x_cl, inte);
+
     if inte < 25 {
         println!("Do {} pushps", x_cl.value(inte));
         println!("Next, do {} situps", x_cl.value(inte));
@@ -53,4 +62,8 @@ fn generated_workoout(inte: u32, r_n: u32) {
             println!("Run {} minutes",x_cl.value(inte));
         }
     }
+}
+
+fn sample_ff(cache: &mut Cacher<impl Fn(u32) -> u32>, intensity: u32) {
+    print!("Sample FF -> {}", cache.value(intensity));
 }

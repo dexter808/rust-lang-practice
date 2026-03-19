@@ -25,22 +25,28 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
-        if args.len() < 3 {
-            Err("not enough arguments provided")
-        } else {
-            let q = &args[1];
-            let f = &args[2];
-            let ci = env::var("RUST_TEST_CASE_INSENSITIVE").is_err();
+    pub fn new(mut args: env::Args) -> Result<Config, &'static str> {
+        args.next();
         
-            Ok(
-                Config {
-                    query: q.clone(),
-                    filename: f.clone(),
-                    case_sensitivity: ci,
-                }
-            )
-        }
+        let q = match args.next() {
+            None => return Err("Didn't get query string"),
+            Some(s) => s
+        };
+
+        let f = match args.next() {
+            None => return Err("Didn't get file path"),
+            Some(s) => s
+        };
+
+        let ci = env::var("RUST_CASE_INSENSITIVITY_FLAG").is_err();
+
+        Ok(
+            Config {
+                query: q.clone(),
+                filename: f.clone(),
+                case_sensitivity: ci,
+            }
+        )
     }
 }
 
@@ -55,13 +61,9 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut res: Vec<&str> = Vec::new();
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&query.to_lowercase()) {
-            res.push(line);
-        }
-    }
-    res
+    contents.lines()
+        .filter(|s| s.contains(query))
+        .collect()
 }
 
 #[cfg(test)]

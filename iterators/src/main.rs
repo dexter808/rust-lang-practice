@@ -1,12 +1,12 @@
-
+mod counter;
 
 #[derive(PartialEq, Debug)]
-struct shoe {
+struct Shoe {
     size: u32,
     brand: String,
 }
 
-fn filter_shoes_of_size(shoes: Vec<shoe>, shoe_size: u32) -> Vec<shoe> {
+fn filter_shoes_of_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
     shoes.into_iter().filter(|s| s.size == shoe_size).collect()
 }
 
@@ -21,8 +21,10 @@ mod tests {
 
     #[test]
     fn filter_shoes_of_size_test() {
-        let shoes = vec![shoe {size: 2, brand: String::from("A")}, shoe {size: 4, brand: String::from("B")}, 
-        shoe {size: 6, brand: String::from("C")}, shoe {size: 8, brand: String::from("D")}];
+        let shoes = vec![Shoe {size: 2, brand: String::from("A")}, Shoe {size: 4, brand: String::from("B")}, 
+        Shoe {size: 6, brand: String::from("C")}, Shoe {size: 8, brand: String::from("D")}];
+
+        print!("Shoes: {:?}", shoes);
 
         assert!(filter_shoes_of_size(shoes, 2)[0].size <= 2);
     }

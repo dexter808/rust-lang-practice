@@ -1,39 +1,30 @@
-use std::{cell::RefCell, rc::Rc};
-use List::{Cons, Nil};
+use std::{cell::RefCell, rc::{Rc, Weak}};
 
 #[derive(Debug)]
-enum List {
-    Cons(i32, RefCell<Rc<List>>),
-    Nil,
-}
-
-impl List {
-    fn tail(&self) -> Option<&RefCell<Rc<List>>> {
-        match self {
-            Cons(_, item) => Some(item),
-            Nil => None
-        }
-    }
+struct Node {
+    value: i32,
+    children: RefCell<Vec<Rc<Node>>>,
+    parent: RefCell<Weak<Node>>
 }
 
 fn main() {
-    let a = Rc::new(Cons(1, RefCell::new(Rc::new(Nil))));
+    let leaf = Rc::new(Node {
+        value: 3,
+        children: RefCell::new(vec![]),
+        parent: RefCell::new(Weak::new()),
+    });
 
-    println!("a inital rc count = {}", Rc::strong_count(&a));
-    println!("a next item = {:?}", &a.tail());
+    println!("Strong count leaf: {}, Weak count leaf: {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+    println!("leaf parent: {:?}", leaf.parent.borrow().upgrade());
 
-    let b = Rc::new(Cons(2, RefCell::new(Rc::clone(&a))));
+    let branch = Rc::new(Node {
+        value: 5,
+        children: RefCell::new(vec![Rc::clone(&leaf)]),
+        parent: RefCell::new(Weak::new()),
+    });
+    *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
 
-    println!("b inital rc count = {}", Rc::strong_count(&b));
-    println!("a next item = {:?}", b.tail());
-
-    if let Some(item) = a.tail() {
-        *item.borrow_mut() = Rc::clone(&b);
-    }
-
-    println!("a final rc count = {}", Rc::strong_count(&a));
-    println!("b final rc count = {}", Rc::strong_count(&b));
-
-    // print!("Print reference cycle a -> {:?}", a);
-
+    println!("Strong count branch: {}, Weak count branch: {}", Rc::strong_count(&branch), Rc::weak_count(&branch));
+    
+    println!("leaf parent: {:?}", leaf.parent.borrow().upgrade());
 }

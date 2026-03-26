@@ -1,15 +1,12 @@
 use blog::Post;
 
 fn main() {
-    let mut post = Post::new();
+    let mut draft_post = Post::new();
     let init_content = "I had green tea this morning.";
 
-    post.add_text(init_content);
-    assert_eq!("", post.content());
+    draft_post.add_text(init_content);
 
-    post.request_review();
-    assert_eq!("", post.content());
+    let pending_review_post = draft_post.request_review();
 
-    post.approve();
-    assert_eq!(init_content, post.content());
+    assert_eq!(init_content, pending_review_post.approve().content());
 }

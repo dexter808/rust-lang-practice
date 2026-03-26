@@ -1,0 +1,7 @@
+Topics covered:
+
+1. Dynamic Dispatch vs Static Dispatch
+
+2. State Patterns in rust using internal state transitions
+
+3. Encoding State using types

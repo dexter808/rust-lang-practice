@@ -171,11 +171,12 @@ fn _patterns() {
         Hello {id: i32}
     }
 
-    let msg = Message::Hello { id: 4 };
+    // let msg = Message::Hello { id: 4 };
+    let msg = Message::Hello { id: 8 };
 
     match msg {
         Message::Hello { id: id_var @ 3 ..=7, } => println!("Hello variant with id = {}", id_var),
         Message::Hello { id: id_var @ 1..=6,  } => println!("Hello variant with 2nd id = {}", id_var),
-        _ => ()
+        Message::Hello { id } => println!("Hello variant not found in known range: {}", id)
     };
 }

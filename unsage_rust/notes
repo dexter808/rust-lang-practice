@@ -1,0 +1,12 @@
+Why use unsafe rust?
+1. Static analysis is conservative by nature. Rust will reject a program if it is not guarenteed to be memory safe, even though the devs know it is memory safe.
+2. Underlying computer hardware is inherently unsafe. System's programming language should allow to write unsafe code when required.
+
+Unsafe rust uses the keyword -> 'unsafe' which allows:
+1. Dereference a raw pointer
+2. Call an unsafe function / method
+3. Access or modify a mutable static variable.
+4. Implement an unsafe trait.
+5. Access fields of Union.
+
+Keep unsafe code isolated and small so that it is easy to debug.

@@ -167,4 +167,15 @@ fn _patterns() {
     };
 
     // Bindings - Use @ to bind a value and then @ is allowed to test the condition after binding
+    enum Message {
+        Hello {id: i32}
+    }
+
+    let msg = Message::Hello { id: 4 };
+
+    match msg {
+        Message::Hello { id: id_var @ 3 ..=7, } => println!("Hello variant with id = {}", id_var),
+        Message::Hello { id: id_var @ 1..=6,  } => println!("Hello variant with 2nd id = {}", id_var),
+        _ => ()
+    };
 }

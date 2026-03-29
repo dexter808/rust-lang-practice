@@ -15,3 +15,8 @@ Keep unsafe code isolated and small so that it is easy to debug.
 Unsafe rust has 2 types of raw pointers:
 1. mutable raw pointers
 2. immutable raw pointers
+
+Used for safe abstraction
+Used for building c++ interfaces
+
+Unsafe functions must be called from another unsafe block.

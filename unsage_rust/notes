@@ -10,3 +10,8 @@ Unsafe rust uses the keyword -> 'unsafe' which allows:
 5. Access fields of Union.
 
 Keep unsafe code isolated and small so that it is easy to debug.
+
+
+Unsafe rust has 2 types of raw pointers:
+1. mutable raw pointers
+2. immutable raw pointers

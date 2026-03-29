@@ -1,11 +1,5 @@
-use core::slice;
-
-unsafe extern "C" {
-    fn abs(inp: i32) -> i32;
-}
+static HELLO_WORLD: &str = "Hello World!!"; 
 
 fn main() {
-    unsafe {
-        println!("Absolute value of -3 from c -> {}", abs(-3));
-    }
+    println!("name is {}", HELLO_WORLD);
 }

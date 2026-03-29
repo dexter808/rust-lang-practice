@@ -1,5 +1,14 @@
-static HELLO_WORLD: &str = "Hello World!!"; 
+static mut COUNTER: u32 = 0; 
 
 fn main() {
-    println!("name is {}", HELLO_WORLD);
+
+    unsafe {
+        COUNTER += 1;
+    }
+
+    unsafe {
+        // println!("Value is {}", COUNTER); This is not allowed anymore from 2024
+        let v = COUNTER; // Copy then use
+        println!("New value is -> {}", v);
+    }
 }

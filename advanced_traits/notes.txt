@@ -1,0 +1,8 @@
+Generics vs associated types:
+
+1. We use generics when we want flexibility from user level who is going to use the function or the utility.
+2. Associated types are less flexible but more reliable than generics because the compiler knows whom to call.
+
+Example:
+1. When implementing something for different types like i32, str etc... we would want to use generics for funtions.
+2. Defining something more fundamental like an add trait, we would want to use associated types

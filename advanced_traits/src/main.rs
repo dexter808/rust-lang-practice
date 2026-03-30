@@ -30,30 +30,30 @@ impl Add<Meter> for Millimeters {
 }
 
 trait Pilot {
-    fn fly(&self) -> ();
+    fn fly() -> ();
 }
 
 
 trait Wizard {
-    fn fly(&self) -> ();
+    fn fly() -> ();
 }
 
 struct Human;
 
 impl Human {
-    fn fly(&self) {
+    fn fly() {
         println!("*Waving hands furiously*");
     }
 }
 
 impl Pilot for Human {
-    fn fly(&self) -> () {
+    fn fly() -> () {
         println!("*Uses a plane to fly*");
     }
 }
 
 impl Wizard for Human {
-    fn fly(&self) -> () {
+    fn fly() -> () {
         println!("*Uses broom to fly*");
     }
 }
@@ -64,7 +64,8 @@ fn main() {
     assert_eq!(Millimeters(12) + Meter(2), Millimeters(2012));
 
     let me = Human;
-    me.fly();
-    Wizard::fly(&me);
-    Pilot::fly(&me);
+    Human::fly();
+    // Fully qualified syntax
+    <Human as Wizard>::fly();
+    <Human as Pilot>::fly();
 }

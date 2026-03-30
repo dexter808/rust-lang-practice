@@ -10,3 +10,8 @@ Example:
 
 Default generic type params:
 Certain traits use a combination of generics and associated types, like std::ops::Add trait for example where the default generic type for rhs is self.
+
+New type pattern
+1. Orphan Rule: We can implement a trait on a type as long as type or trait is defined within our crate.
+The new type pattern allow us to get around this restriction by using a wrapper and making the type local.
+If we still want only to implement some for a type and not others. We can get the existing implementation by implementing a deref trait, because then rust will use automatic ref and deref to call them.

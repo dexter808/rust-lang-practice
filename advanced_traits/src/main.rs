@@ -1,20 +1,19 @@
-pub trait Iterator {
-    type Item;
+use std::ops::Add;
 
-    fn next(&mut self) -> Option<Self::Item>;
+#[derive(Debug, PartialEq)]
+struct Point {
+    x: i32,
+    y: i32,
 }
 
-struct Counter {}
+impl Add for Point {
+    type Output = Point;
 
-impl Iterator for Counter {
-    type Item = u32;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        Some(0)
+    fn add(self, rhs: Self) -> Self::Output {
+        Point {x: self.x + rhs.x, y: self.y + rhs.y}
     }
 }
 
-
 fn main() {
-    println!("Hello, world!");
+    assert_eq!(Point{x:3, y: 2} + Point{x: 2, y: 3}, Point{x: 5, y: 5})
 }

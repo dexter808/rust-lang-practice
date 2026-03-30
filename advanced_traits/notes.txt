@@ -6,3 +6,7 @@ Generics vs associated types:
 Example:
 1. When implementing something for different types like i32, str etc... we would want to use generics for funtions.
 2. Defining something more fundamental like an add trait, we would want to use associated types
+
+
+Default generic type params:
+Certain traits use a combination of generics and associated types, like std::ops::Add trait for example where the default generic type for rhs is self.

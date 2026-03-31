@@ -86,6 +86,12 @@ impl Display for Wrapper {
     }
 }
 
+
+
+struct Age(u32);
+
+struct ID(u32);
+
 fn main() {
     assert_eq!(Point{x:3, y: 2} + Point{x: 2, y: 3}, Point{x: 5, y: 5});
     assert_eq!(Millimeters(12) + Meter(2), Millimeters(2012));

@@ -15,3 +15,35 @@ New type pattern
 1. Orphan Rule: We can implement a trait on a type as long as type or trait is defined within our crate.
 The new type pattern allow us to get around this restriction by using a wrapper and making the type local.
 If we still want only to implement some for a type and not others. We can get the existing implementation by implementing a deref trait, because then rust will use automatic ref and deref to call them.
+
+
+Type alias
+```
+type kilometer = i32
+
+let int_32_bit : kilometer = 2;
+```
+
+never type
+```
+continue has a never type - something that does not return anything ever, used by compiler for type safety
+panic is also a never type
+loop is also a never type, if we have break inside then it is not.
+
+Dynamic sized type (dst / unsigned types)
+```
+str is a dst
+```
+dsts cannot be used directly, hence we need to use a reference or any smart pointer like Box. &str
+
+Sized is a trait which is automatically added / implemented for all types we use.
+```
+// Following is automatically added when compiled so we dont need to add 'Sized' manually.
+fn generic<T: Sized>(t: T) {
+    // snip
+}
+
+// What if we want to use a dst as a generic? In that case we need to add ?Sized
+fn generic<T: ?Sized>(t: Box<T>) {
+    // snip
+}

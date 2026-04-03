@@ -4,7 +4,7 @@ macro_rules! vec {
         {
             let mut temp_vec = Vec::new();
             $(
-                temp_vec.push(&x);
+                temp_vec.push($x);
             )*
             temp_vec
         }

@@ -1,5 +1,5 @@
-fn -> function or function pointer type
-Fn -> Closure
+fn -> function or function pointer type - This is a type and not a trait
+Fn -> Closure - This is a trait
 
 
 There are 3 closue trait
@@ -7,3 +7,4 @@ There are 3 closue trait
 2. FnMut > Closure captures variables and its environments mutably
 3. fnOnce -> Closure takes ownership of values in envs and thus consumes them
 
+Closures are represented using traits, and not type.

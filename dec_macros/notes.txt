@@ -1,0 +1,6 @@
+# Macros
+
+Rust allows us to write Macros, which are code to write code for us.
+These are static and calculated at compile time.
+
+## Decclarative Macros
